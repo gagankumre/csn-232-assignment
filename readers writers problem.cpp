@@ -11,11 +11,11 @@ int reader_wait;
 bool wrt;
 };
 
-void addR(struct semaphore *s){
+void addReader(struct semaphore *s){
 
 	if (s->mutex == 0 && s->reader_count == 0){
 
-		printf("\nSorry, File open in Write mode.\nNew Reader added to queue.\n");
+		printf("\nSorry, File open in Write mode.\nNew Reader is added to queue.\n");
 		s->reader_wait++;
 
 	}else{
@@ -27,7 +27,7 @@ void addR(struct semaphore *s){
 	return ;
 }
 
-void addW(struct semaphore *s){
+void addWriter(struct semaphore *s){
 
 	if(s->mutex==1){
 		s->mutex--;
@@ -35,14 +35,14 @@ void addW(struct semaphore *s){
 		printf("\nWriter Process added.\n");
 	}else if{
 
-		(s->wrt) printf("\nSorry, Writer already operational.\n");
+		(s->wrt) printf("\nSorry, Writer is already operational.\n");
 	}
 
 	elseprintf("\nSorry, File open in Read mode.\n");
 	return ;
 }
 
-void remR(struct semaphore *s){
+void removeReader(struct semaphore *s){
 
 	if{
 		(s->reader_count == 0) printf("\nNo readers to remove.\n");
@@ -55,7 +55,7 @@ void remR(struct semaphore *s){
 	return ;
 }
 
-void remW(struct semaphore *s){
+void removeWriter(struct semaphore *s){
 	if{
 		(s->wrt==0) printf("\nNo Writer to Remove");
 	}else{
@@ -84,17 +84,17 @@ int main(){
 		scanf("%d",&ch);
 		switch(ch){
 
-			case 1: addR(&S1); break;
+			case 1: addReader(&S1); break;
 
-			case 2: addW(&S1); break;
+			case 2: addWriter(&S1); break;
 
-			case 3: remR(&S1); break;
+			case 3: removeReader(&S1); break;
 
-			case 4: remW(&S1); break;
+			case 4: removeWriter(&S1); break;
 
-			case 5: printf("\n\tGoodBye!"); getch(); return 0;
+			case 5: printf("\n\tGoodBye"); getch(); return 0;
 
-			default: printf("\nInvalid Entry!"); continue;
+			default: printf("\nInvalid Entry"); continue;
 
 		}
 
