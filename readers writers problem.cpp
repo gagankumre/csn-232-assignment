@@ -6,28 +6,28 @@
 struct semaphore{
 
 int mutex;
-int rcount;
-int rwait;
+int reader_count;
+int reader_wait;
 bool wrt;
 };
 
-voidaddR(struct semaphore *s){
+void addR(struct semaphore *s){
 
-	if (s->mutex == 0 && s->rcount == 0){
+	if (s->mutex == 0 && s->reader_count == 0){
 
 		printf("\nSorry, File open in Write mode.\nNew Reader added to queue.\n");
-		s->rwait++;
+		s->reader_wait++;
 
 	}else{
 
 		printf("\nReader Process added.\n");
-		s->rcount++;
+		s->reader_count++;
 		s->mutex--;
 	}
 	return ;
 }
 
-voidaddW(struct semaphore *s){
+void addW(struct semaphore *s){
 
 	if(s->mutex==1){
 		s->mutex--;
@@ -42,20 +42,20 @@ voidaddW(struct semaphore *s){
 	return ;
 }
 
-voidremR(struct semaphore *s){
+void remR(struct semaphore *s){
 
 	if{
-		(s->rcount == 0) printf("\nNo readers to remove.\n");
+		(s->reader_count == 0) printf("\nNo readers to remove.\n");
 	}else{
 
 		printf("\nReader Removed.\n");
-		s->rcount--;
+		s->reader_count--;
 		s->mutex++;
 	}
 	return ;
 }
 
-voidremW(struct semaphore *s){
+void remW(struct semaphore *s){
 	if{
 		(s->wrt==0) printf("\nNo Writer to Remove");
 	}else{
@@ -63,12 +63,12 @@ voidremW(struct semaphore *s){
 		printf("\nWriter Removed\n");
 		s->mutex++;
 		s->wrt=0;
-		if(s->rwait!=0){
+		if(s->reader_wait!=0){
 
-			s->mutex-=s->rwait;
-			s->rcount=s->rwait;
-			s->rwait=0;
-			printf("%d waiting Readers Added.",s->rcount);
+			s->mutex-=s->reader_wait;
+			s->reader_count=s->reader_wait;
+			s->reader_wait=0;
+			printf("%d waiting Readers Added.",s->reader_count);
 		}
 	}
 }
@@ -98,7 +98,7 @@ int main(){
 
 		}
 
-		printf("\n\n<<<<<< Current Status >>>>>>\n\n\tMutex\t\t:\t%d\n\tActive Readers\t:\t%d\n\tWaiting Readers\t:\t%d\n\tWriter Active\t:\t%s\n\n", S1.mutex, S1.rcount, S1.rwait, (S1.mutex==0 && S1.rcount==0) ? "YES" : "NO");
+		printf("\n\n<<<<<< Current Status >>>>>>\n\n\tMutex\t\t:\t%d\n\tActive Readers\t:\t%d\n\tWaiting Readers\t:\t%d\n\tWriter Active\t:\t%s\n\n", S1.mutex, S1.reader_count, S1.reader_wait, (S1.mutex==0 && S1.reader_count==0) ? "YES" : "NO");
 		system("pause");
 
 	}
