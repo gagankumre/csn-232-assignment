@@ -4,11 +4,10 @@
 
 
 struct semaphore{
-
-int mutex;
-int reader_count;
-int reader_wait;
-bool wrt;
+	int mutex;
+	int reader_count;
+	int reader_wait;
+	bool wrt;
 };
 
 void addReader(struct semaphore *s){
