@@ -64,7 +64,7 @@ int main(int argc,char *argv[])
 	if(status!=0)
 		perror("create customer is failure!\n");
 
-
+	
 	pthread_join(id2,NULL);
 	pthread_join(id1,NULL);
 
